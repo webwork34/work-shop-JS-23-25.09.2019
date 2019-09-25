@@ -5,7 +5,11 @@ const score     = document.querySelector('.score'),
       music     = document.createElement('embed');
     //   music     = document.createElement('audio');
       
-let scoreLS = 0;
+let scoreLS;
+if(localStorage.getItem('score')){
+    scoreLS = +localStorage.getItem('score');
+} else scoreLS = 0;
+// console.log(scoreLS);
 
 // music.setAttribute('src', './audio.mp3');
 // music.setAttribute('type', 'audio/mp3');
@@ -18,7 +22,7 @@ start.addEventListener('click', startGame);
 document.addEventListener('keydown', startRun);
 document.addEventListener('keyup', stopRun);
 
-const keys = {
+let keys = {
     ArrowUp: false,
     ArrowDown: false,
     ArrowRight: false,
@@ -36,13 +40,19 @@ function getQuantityElements(heightElemnt){
     return (gameArea.offsetHeight / heightElemnt) + 1;
 };
 
-if(localStorage.getItem('score')){
-    scoreLS = +localStorage.getItem('score');
-}
-// console.log(scoreLS);
-
 
 function startGame(){
+
+    if(localStorage.getItem('score')){
+        scoreLS = +localStorage.getItem('score');
+        keys = {
+            ArrowUp: false,
+            ArrowDown: false,
+            ArrowRight: false,
+            ArrowLeft: false
+        };
+    } else scoreLS = 0;
+    // console.log(scoreLS);
 
     start.classList.add('hide');
     gameArea.innerHTML = '';
@@ -165,8 +175,6 @@ function moveEnemy(){
                         localStorage.setItem('score', setting.score);
                     }
                 }, 100);
-                
-        
         }
 
         
